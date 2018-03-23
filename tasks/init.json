@@ -5,10 +5,10 @@
   "parameters": {
     "module_name": {
       "description": "Specify the Puppet Forge module name",
-      "type": "String[0]",
+      "type": "String[1]",
     "version": {
       "description": "Specify the desired version of the module",
-      "type": "Optional[Pattern[/^[0-9][{3}.[0-9][{3}.[0-9][{3}]"
+      "type": "Optional[Integer[1]"
     }
     }
   }
