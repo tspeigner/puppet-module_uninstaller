@@ -19,7 +19,9 @@ unless Puppet[:server] == Puppet[:certname]
   exit 1
 end
 
+results = {}
 params = JSON.parse(STDIN.read)
+
 
 def install_module(modules,version)
   if version.empty?
