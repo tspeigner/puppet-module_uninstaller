@@ -34,6 +34,7 @@ def install_module(modules,version)
     stderr: stderr.strip,
     exit_code: status.exitstatus
   }
+end
 
 modules = params['modules'].split(',')
 
@@ -51,7 +52,5 @@ modules.each do |modules|
                               else
                                 "#{output_json[0]['error']['msg']}"
                               end
-
-  end
 end
 puts results.to_json

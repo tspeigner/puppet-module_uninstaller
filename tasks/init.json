@@ -3,7 +3,7 @@
   "supports_noop": false,
   "description": "Deploy Puppet modules from the Puppet Forge",
   "parameters": {
-    "module_name": {
+    "modules": {
       "description": "Specify the Puppet Forge module name",
       "type": "String[1]",
     "version": {
