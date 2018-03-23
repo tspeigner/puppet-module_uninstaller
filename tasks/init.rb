@@ -32,5 +32,24 @@ def install_module(modules,version)
     stderr: stderr.strip,
     exit_code: status.exitstatus
   }
-end
 
+modules = params['modules'].split(',')
+
+modules.each do |modules|
+  results[modules] = {}
+
+  output = install_module(modules)
+  output_index = output[:stdout].index('[')
+  output_eol = output[:stdout][output_index..-1]
+  output_json = JSON.parse(output_eol)
+  json_status = output_json[0]['staus']
+
+  results[modules][:result] = if json_status == 'complete'
+                                "Successfully deployed the #{modules} module."
+                              else
+                                "#{output_json[0]['error']['msg']}"
+                              end
+
+  end
+end
+puts results.to_json
