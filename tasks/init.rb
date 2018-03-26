@@ -84,7 +84,7 @@ modules.each do |mod|
   results[mod][:result] = if output[:exit_code] == 0 
                                 "Successfully deployed the #{modules} module."
                               else
-                                "output[:stderr]"
+                                output[:stderr]
                               end
 end
 puts results.to_json
