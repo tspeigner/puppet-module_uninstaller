@@ -85,8 +85,7 @@ modules.each do |mod|
                                 "Successfully deployed the #{modules} module."
                               else
                                 if output[:stderr].include? 'Error:'
-                                  puts "The #{modules} do not exist on Puppet Forge"
+                                  puts "The #{modules} module(s) do not exist on Puppet Forge"
                                 end
                               end
 end
-puts results.to_json
