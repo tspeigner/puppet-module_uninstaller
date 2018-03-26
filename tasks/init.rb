@@ -76,8 +76,7 @@ modules.each do |mod|
                             else
                               puts "The #{modules} module(s) could not be installed"
                           end
-                          end
-                        end
+end
 #def code_manager_installed?
 #  if File.exist?('/etc/puppetlabs/code-staging')
 #    true
