@@ -75,7 +75,7 @@ modules.each do |mod|
                         end
 
 def code_manager_installed?
-  if not File.exist?('/etc/puppetlabs/code-staging')
+  if File.exist?('/etc/puppetlabs/code-staging')
     true
   else
     false
