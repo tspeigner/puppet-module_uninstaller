@@ -42,7 +42,7 @@ end
 
 results = {}
 params = JSON.parse(STDIN.read)
-modules = params['modules']
+modules = params['modules'].split(',')
 
 def install_module(modules,version)
   if version.empty?
