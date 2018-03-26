@@ -20,7 +20,7 @@ unless Puppet[:server] == Puppet[:certname]
 end
 
 def code_manager_installed?
-  if File.exist?(/etc/puppetlabs/code-staging)
+  if File.exist?('/etc/puppetlabs/code-staging')
     false
   else
     true
