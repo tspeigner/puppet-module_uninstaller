@@ -69,11 +69,15 @@ modules.each do |mod|
                             when /No releases matching/
                               puts "The #{modules} module(s) could not be installed because the version is"
                               puts "incorrect. Check the version and try again."
+                            when /is already installed/
+                              puts 'This module is already installed.'
+                              puts 'You can use the upgrade to install a different version.'
+                              puts 'Or you can use the force option to re-install this module.'
                             else
                               puts "The #{modules} module(s) could not be installed"
                           end
+                          end
                         end
-
 #def code_manager_installed?
 #  if File.exist?('/etc/puppetlabs/code-staging')
 #    true
@@ -94,4 +98,3 @@ modules.each do |mod|
 #  puts "Continuing installation of #{modules} "
 #  exit 0
 #end
-end
