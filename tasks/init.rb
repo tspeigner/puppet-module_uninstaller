@@ -59,7 +59,11 @@ modules.each do |mod|
     results[mod][:result] = if output[:stdout].include? 'already installed'
                               puts "The #{modname} module is already installed."
                             else
-                              puts "The #{modname} v#{vers} module was installed."
+                              if vers == ''
+                                puts "The latest version of #{modname} module was installed"
+                              else
+                                puts "The #{modname} v#{vers} module was installed."
+                              end
                             end 
   else
     results[mod][:result] = case output[:stderr]
