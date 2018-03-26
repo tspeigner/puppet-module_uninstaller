@@ -25,9 +25,9 @@ end
 
 def code_manager_installed?
   if not File.exist?('/etc/puppetlabs/code-staging')
-    false
-  else
     true
+  else
+    false
   end
 end
 
@@ -75,8 +75,7 @@ modules.each do |mod|
   output=install_module(modlist[0],version)
   results[mod][:result] = if output[:stdout].include? 'already installed'
                             puts "The #{modules} module is already installed."
-                          end
-  results[mod][:result] = case output[:stderr]
+                          case output[:stderr]
                             when /400 Bad Request/
                               puts "The #{modules} module(s) could not be found on Puppet Forge"
                               puts 'Check your spelling and try again.'
@@ -88,5 +87,6 @@ modules.each do |mod|
                               puts 'dependency issues. Please install dependencies before trying again.'
                             else
                               puts "The #{modules} module(s) could not be installed"
-                            end
+                          end
+                        end
 end
