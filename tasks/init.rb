@@ -14,6 +14,9 @@ require 'open3'
 
 Puppet.initialize_settings
 
+results = {}
+params = JSON.parse(STDIN.read)
+modules = params['modules'].split(',')
 
 unless Puppet[:server] == Puppet[:certname]
   puts 'This task can only be run against the Master (of Masters)'
@@ -39,10 +42,6 @@ unless code_manager_installed?
   puts "Continuing installation of #{modules} "
   exit 0
 end
-
-results = {}
-params = JSON.parse(STDIN.read)
-modules = params['modules'].split(',')
 
 def install_module(modules,version)
   if version.empty?
@@ -82,10 +81,10 @@ modules.each do |mod|
   end
   
   output=install_module(modlist[0],version)
-  results[mod][:result] = if output[:stderr] 
+  results[mod][:result] = if exit_code == 0 
                                 "Successfully deployed the #{modules} module."
                               else
-                                "#{output_json[0]['error']['msg']}"
+                                "#{output}"
                               end
 end
 puts results.to_json
