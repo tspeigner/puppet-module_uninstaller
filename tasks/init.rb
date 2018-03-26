@@ -81,11 +81,17 @@ modules.each do |mod|
   end
   
   output=install_module(modlist[0],version)
-  results[mod][:result] = if output[:exit_code] == 0 
-                                "Successfully deployed the #{modules} module."
+  results[mod][:result] = if output[:stdout].include? 'already installed'
+                                puts "The #{modules} module is already installed."
                               else
-                                if output[:stderr].include? 'Error:'
-                                  puts "The #{modules} module(s) does not exist on Puppet Forge"
+                                if output[:stderr].include? '400 Bad Request'
+                                  puts "The #{modules} module(s) could not be found on Puppet Forge"
+                                  puts 'Check your spelling and try again.'
+                                elsif output[:stderr].include? 'satisfy all dependencies'
+                                  puts "The #{modules} module(s) could not be installed because of"
+                                  puts 'dependency issues. Please install dependencies before trying again.'
+                                else
+                                  puts "The #{modules} module(s) could not be installed"
                                 end
-                              end
+                          end
 end
