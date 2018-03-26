@@ -74,24 +74,24 @@ modules.each do |mod|
                           end
                         end
 
-def code_manager_installed?
-  if File.exist?('/etc/puppetlabs/code-staging')
-    true
-  else
-    false
-  end
-end
-
-unless code_manager_installed?
-  puts 'It appears that Code Manager is installed look here for more information'
-  puts 'Managing environment content with a Puppetfile'
-  puts 'https://puppet.com/docs/pe/2017.3/code_management/puppetfile.html#managing-environment-content-with-puppetfiles'
-  puts ''
-  puts '-------------------------------'
-  puts '-------------------------------'
-  puts '-------------------------------'
-  puts ''
-  puts "Continuing installation of #{modules} "
-  exit 0
-end
+#def code_manager_installed?
+#  if File.exist?('/etc/puppetlabs/code-staging')
+#    true
+#  else
+#    false
+#  end
+#end
+#
+#unless code_manager_installed?
+#  puts 'It appears that Code Manager is installed look here for more information'
+#  puts 'Managing environment content with a Puppetfile'
+#  puts 'https://puppet.com/docs/pe/2017.3/code_management/puppetfile.html#managing-environment-content-with-puppetfiles'
+#  puts ''
+#  puts '-------------------------------'
+#  puts '-------------------------------'
+#  puts '-------------------------------'
+#  puts ''
+#  puts "Continuing installation of #{modules} "
+#  exit 0
+#end
 end
