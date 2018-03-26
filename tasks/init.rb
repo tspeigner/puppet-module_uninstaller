@@ -53,12 +53,13 @@ modules.each do |mod|
   end
   
   modname = modlist[0]
+  vers = modlist[1]
   output=install_module(modname,version)
   if output[:exit_code] == 0
     results[mod][:result] = if output[:stdout].include? 'already installed'
                               puts "The #{modname} module is already installed."
                             else
-                              puts "The #{modname} module was installed."
+                              puts "The #{modname} #{vers} module was installed."
                             end 
   else
     results[mod][:result] = case output[:stderr]
@@ -79,6 +80,9 @@ modules.each do |mod|
       puts 'This module is already installed.'
       puts 'You can use the upgrade option to install a different version.'
       puts 'Or you can use the force option to re-install this module.'
+    when /Unparsable version range/
+      puts 'The version number is incorrect.'
+      puts 'Check the version number and try again.'
     else
       puts "The #{modname} module(s) could not be installed"
     end
