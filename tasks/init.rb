@@ -85,10 +85,10 @@ modules.each do |mod|
                             puts "The #{modules} module is already installed."
                           end
   results[mod][:result] = case output[:stderr]
-                            when '400 Bad Request'
+                            when /400 Bad Request/
                               puts "The #{modules} module(s) could not be found on Puppet Forge"
                               puts 'Check your spelling and try again.'
-                            when 'satisfy all dependencies'
+                            when /satisfy all dependencies/
                               puts "The #{modules} module(s) could not be installed because of"
                               puts 'dependency issues. Please install dependencies before trying again.'
                             else
