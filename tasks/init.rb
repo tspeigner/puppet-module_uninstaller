@@ -21,9 +21,9 @@ end
 
 def code_manager_installed?
   if File.exist?('/etc/puppetlabs/code-staging')
-    false
-  else
     true
+  else
+    false
   end
 end
 
