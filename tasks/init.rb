@@ -53,8 +53,6 @@ modules.each do |mod|
   end
   
   output=install_module(modlist[0],version)
-  #results[mod][:result] = if output[:stdout].include? 'already installed'
-  #                          puts "The #{modules} module is already installed."
   results[mod][:result] = case output[:stderr]
                             when /400 Bad Request/
                               puts "The #{modules} module(s) could not be found on Puppet Forge"
@@ -71,11 +69,14 @@ modules.each do |mod|
                               puts "incorrect. Check the version and try again."
                             when /is already installed/
                               puts 'This module is already installed.'
-                              puts 'You can use the upgrade to install a different version.'
+                              puts 'You can use the upgrade option to install a different version.'
                               puts 'Or you can use the force option to re-install this module.'
                             else
                               puts "The #{modules} module(s) could not be installed"
-                          end
+                            end
+results[mod][:result] = if output[:stdout].include? 'already installed'
+                           puts "The #{modules} module is already installed."
+                        end
 end
 #def code_manager_installed?
 #  if File.exist?('/etc/puppetlabs/code-staging')
