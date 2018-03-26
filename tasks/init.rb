@@ -40,7 +40,7 @@ unless code_manager_installed?
   puts '-------------------------------'
   puts '-------------------------------'
   puts "Continuing installation of #{modules} "
-  exit 0
+  #exit 0
 end
 
 def install_module(modules,version)
@@ -85,6 +85,10 @@ modules.each do |mod|
                             when /satisfy all dependencies/
                               puts "The #{modules} module(s) could not be installed because of"
                               puts 'dependency issues. Please install dependencies before trying again.'
+                              puts 'Or you can force the installation with the --ignore-dependencies option.'
+                            when /No releases matching/
+                              puts "The #{modules} module(s) could not be installed because the version is"
+                              puts "incorrect. Check the version and try again."
                             else
                               puts "The #{modules} module(s) could not be installed"
                           end
