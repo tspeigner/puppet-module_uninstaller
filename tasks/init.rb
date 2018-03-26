@@ -83,7 +83,7 @@ modules.each do |mod|
   output=install_module(modlist[0],version)
   results[mod][:result] = if output[:stdout].include? 'already installed'
                                 puts "The #{modules} module is already installed."
-                                case output[:stderr]
+                                case output[:stderr].include?
                                 when '400 Bad Request'
                                   puts "The #{modules} module(s) could not be found on Puppet Forge"
                                   puts 'Check your spelling and try again.'
