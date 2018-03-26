@@ -24,10 +24,10 @@ unless Puppet[:server] == Puppet[:certname]
 end
 
 def code_manager_installed?
-  if File.exist?('/etc/puppetlabs/code-staging')
-    true
-  else
+  if not File.exist?('/etc/puppetlabs/code-staging')
     false
+  else
+    true
   end
 end
 
@@ -56,22 +56,14 @@ def install_module(modules,version)
   }
 end
 
-# Install each module separately. The module is separated by '='
-# in the console. This should be documented.
-#
-# Example input
-# key=value
-# module=version - tspy-code_deploy=1.0.2
-
 modules.each do |mod|
   results[mod] = {}
   modlist=mod.split('=')
 
 # modlist is the list of modules installed.
 # the split is on the '='
-# version is the second value version number
-# if there a version is entered then install with 
-# that version number
+# version is the second value, version number
+# if there a version is entered then install with that version number
 # otherwise install without a version number, which is latest.
 
   if modlist.length > 1
@@ -88,26 +80,13 @@ modules.each do |mod|
                             when /400 Bad Request/
                               puts "The #{modules} module(s) could not be found on Puppet Forge"
                               puts 'Check your spelling and try again.'
+                            when /No releases are available/
+                              puts "The #{modules} module(s) could not be found on Puppet Forge"
+                              puts 'Check your spelling and try again.'
                             when /satisfy all dependencies/
                               puts "The #{modules} module(s) could not be installed because of"
                               puts 'dependency issues. Please install dependencies before trying again.'
                             else
                               puts "The #{modules} module(s) could not be installed"
                             end
-#  results[mod][:result] = if output[:stdout].include? 'already installed'
-#                                puts "The #{modules} module is already installed."
-#                              else
-#                                if output[:stderr].include? '400 Bad Request' or output[:stderr].include? 'No releases are available'
-#                                  puts "The #{modules} module(s) could not be found on Puppet Forge"
-#                                  puts 'Check your spelling and try again.'
-#                                elsif output[:stderr].include? 'satisfy all dependencies'
-#                                  puts "The #{modules} module(s) could not be installed because of"
-#                                  puts 'dependency issues. Please install dependencies before trying again.'
-#                                else
-#                                  puts "The #{modules} module(s) could not be installed"
-#                                end
-#                          end
 end
-
-
-  
