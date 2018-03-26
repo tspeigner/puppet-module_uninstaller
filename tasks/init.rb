@@ -19,15 +19,35 @@ unless Puppet[:server] == Puppet[:certname]
   exit 1
 end
 
+def code_manager_installed?
+  if File.exist?(/etc/puppetlabs/code-staging)
+    false
+  else
+    true
+  end
+end
+
+unless code_manager_installed?
+  puts 'It appears that Code Manager is installed look here for more information'
+  puts 'Managing environment content with a Puppetfile'
+  puts 'https://puppet.com/docs/pe/2017.3/code_management/puppetfile.html#managing-environment-content-with-puppetfiles'
+  puts ''
+  puts '-------------------------------'
+  puts '-------------------------------'
+  puts '-------------------------------'
+  puts "Continuing installation of #{modules} "
+  exit 0
+end
+
 results = {}
 params = JSON.parse(STDIN.read)
 
 
 def install_module(modules,version)
   if version.empty?
-    stdout, stderr, status = Open3.capture3('/opt/puppetlabs/bin/puppet', 'module', 'install', modules)
+    stdout, stderr, status = Open3.capture3('/opt/puppetlabs/bin/puppet', 'module', 'install', '--target-dir', '/etc/puppetlabs/code/modules/', modules)
   else
-    stdout, stderr, status = Open3.capture3('/opt/puppetlabs/bin/puppet', 'module', 'install', modules, '--version', version)
+    stdout, stderr, status = Open3.capture3('/opt/puppetlabs/bin/puppet', 'module', 'install', '--target-dir', '/etc/puppetlabs/code/modules/', modules, '--version', version)
   end
   {
     stdout: stdout.strip,
@@ -36,18 +56,32 @@ def install_module(modules,version)
   }
 end
 
-modules = params['modules'].split(',')
+# Install each module separately. The module is separated by '='
+# in the console. This should be documented.
+#
+# Example input
+# key=value
+# module=version - tspy-code_deploy=1.0.2
 
-modules.each do |modules|
-  results[modules] = {}
+modules.each do |mod|
+  results[mod] = {}
+  modlist=mod.split('=')
 
-  output = install_module(modules)
-  output_index = output[:stdout].index('[')
-  output_eol = output[:stdout][output_index..-1]
-  output_json = JSON.parse(output_eol)
-  json_status = output_json[0]['staus']
+# modlist is the list of modules installed.
+# the split is on the '='
+# version is the second value version number
+# if there a version is entered then install with 
+# that version number
+# otherwise install without a version number, which is latest.
 
-  results[modules][:result] = if json_status == 'complete'
+  if modlist.length > 1
+    version=modlist[1]
+  else
+    version=''
+  end
+  
+  output=install_module(modules,version)
+  results[mod][:result] = if output[:stderr] 
                                 "Successfully deployed the #{modules} module."
                               else
                                 "#{output_json[0]['error']['msg']}"
