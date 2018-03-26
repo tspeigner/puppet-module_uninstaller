@@ -84,7 +84,7 @@ modules.each do |mod|
   results[mod][:result] = if output[:stdout].include? 'already installed'
                                 puts "The #{modules} module is already installed."
                               else
-                                if output[:stderr].include? '400 Bad Request'
+                                if output[:stderr].include? '400 Bad Request' or output[:stderr].include? 'No releases are available'
                                   puts "The #{modules} module(s) could not be found on Puppet Forge"
                                   puts 'Check your spelling and try again.'
                                 elsif output[:stderr].include? 'satisfy all dependencies'
