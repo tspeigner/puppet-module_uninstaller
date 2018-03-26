@@ -81,10 +81,10 @@ modules.each do |mod|
   end
   
   output=install_module(modlist[0],version)
-  results[mod][:result] = if exit_code == 0 
+  results[mod][:result] = if output[:exit_code] == 0 
                                 "Successfully deployed the #{modules} module."
                               else
-                                "#{output}"
+                                "output[:stderr]"
                               end
 end
 puts results.to_json
