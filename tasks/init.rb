@@ -82,16 +82,32 @@ modules.each do |mod|
   
   output=install_module(modlist[0],version)
   results[mod][:result] = if output[:stdout].include? 'already installed'
-                                puts "The #{modules} module is already installed."
-                                case output[:stderr].include?
-                                when '400 Bad Request'
-                                  puts "The #{modules} module(s) could not be found on Puppet Forge"
-                                  puts 'Check your spelling and try again.'
-                                when 'satisfy all dependencies'
-                                  puts "The #{modules} module(s) could not be installed because of"
-                                  puts 'dependency issues. Please install dependencies before trying again.'
-                                else
-                                  puts "The #{modules} module(s) could not be installed"
-                                end
+                            puts "The #{modules} module is already installed."
                           end
+  results[mod][:result] = case output[:stderr]
+                            when '400 Bad Request'
+                              puts "The #{modules} module(s) could not be found on Puppet Forge"
+                              puts 'Check your spelling and try again.'
+                            when 'satisfy all dependencies'
+                              puts "The #{modules} module(s) could not be installed because of"
+                              puts 'dependency issues. Please install dependencies before trying again.'
+                            else
+                              puts "The #{modules} module(s) could not be installed"
+                            end
+#  results[mod][:result] = if output[:stdout].include? 'already installed'
+#                                puts "The #{modules} module is already installed."
+#                              else
+#                                if output[:stderr].include? '400 Bad Request' or output[:stderr].include? 'No releases are available'
+#                                  puts "The #{modules} module(s) could not be found on Puppet Forge"
+#                                  puts 'Check your spelling and try again.'
+#                                elsif output[:stderr].include? 'satisfy all dependencies'
+#                                  puts "The #{modules} module(s) could not be installed because of"
+#                                  puts 'dependency issues. Please install dependencies before trying again.'
+#                                else
+#                                  puts "The #{modules} module(s) could not be installed"
+#                                end
+#                          end
 end
+
+
+  
