@@ -52,31 +52,37 @@ modules.each do |mod|
     version=''
   end
   
-  output=install_module(modlist[0],version)
-  results[mod][:result] = case output[:stderr]
-                            when /400 Bad Request/
-                              puts "The #{modules} module(s) could not be found on Puppet Forge"
-                              puts 'Check your spelling and try again.'
-                            when /No releases are available/
-                              puts "The #{modules} module(s) could not be found on Puppet Forge"
-                              puts 'Check your spelling and try again.'
-                            when /satisfy all dependencies/
-                              puts "The #{modules} module(s) could not be installed because of"
-                              puts 'dependency issues. Please install dependencies before trying again.'
-                              puts 'Or you can force the installation with the --ignore-dependencies option.'
-                            when /No releases matching/
-                              puts "The #{modules} module(s) could not be installed because the version is"
-                              puts "incorrect. Check the version and try again."
-                            when /is already installed/
-                              puts 'This module is already installed.'
-                              puts 'You can use the upgrade option to install a different version.'
-                              puts 'Or you can use the force option to re-install this module.'
+  modname = modlist[0]
+  output=install_module(modname,version)
+  if output[:exit_code] == 0
+    results[mod][:result] = if output[:stdout].include? 'already installed'
+                              puts "The #{modname} module is already installed."
                             else
-                              puts "The #{modules} module(s) could not be installed"
-                            end
-results[mod][:result] = if output[:stdout].include? 'already installed'
-                           puts "The #{modules} module is already installed."
-                        end
+                              puts "The #{modname} module was installed."
+                            end 
+  else
+    results[mod][:result] = case output[:stderr]
+    when /400 Bad Request/
+      puts "The #{modname} module(s) could not be found on Puppet Forge"
+      puts 'Check your spelling and try again.'
+    when /No releases are available/
+      puts "The #{modname} module(s) could not be found on Puppet Forge"
+      puts 'Check your spelling and try again.'
+    when /satisfy all dependencies/
+      puts "The #{modname} module(s) could not be installed because of"
+      puts 'dependency issues. Please install dependencies before trying again.'
+      puts 'Or you can force the installation with the --ignore-dependencies option.'
+    when /No releases matching/
+      puts "The #{modname} module(s) could not be installed because the version is"
+      puts "incorrect. Check the version and try again."
+    when /is already installed/
+      puts 'This module is already installed.'
+      puts 'You can use the upgrade option to install a different version.'
+      puts 'Or you can use the force option to re-install this module.'
+    else
+      puts "The #{modname} module(s) could not be installed"
+    end
+  end
 end
 #def code_manager_installed?
 #  if File.exist?('/etc/puppetlabs/code-staging')
