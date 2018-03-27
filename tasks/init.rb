@@ -40,13 +40,14 @@ modules.each do |mod|
   results[mod] = {}
   modlist=mod.split('=')
   modname=modlist[0]
-  output=install_module(modname,version)
 
   if modlist.length > 1
     version=modlist[1]
   else
     version=''
   end
+
+  output=install_module(modname,version)
 
   if output[:exit_code] == 0
     results[mod][:result] = if output[:stdout].include? 'already installed'
