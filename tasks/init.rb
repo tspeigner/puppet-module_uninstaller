@@ -11,6 +11,7 @@
 require 'puppet'
 require 'puppetclassify'
 require 'open3'
+require 'colorize'
 
 Puppet.initialize_settings
 
@@ -48,7 +49,7 @@ modname.each do |mod|
       puts "The #{mod} module(s) is not installed."
       puts 'Either check your spelling and try again or it was not installed on the system.'
       puts ''
-      puts outputerr[2..100]
+      puts outputerr[2..100].colorize(:blue)
       puts ''
       puts ''
     when /Other installed modules have dependencies/
