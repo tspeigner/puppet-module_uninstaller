@@ -16,15 +16,15 @@ Puppet.initialize_settings
 
 results = {}
 params = JSON.parse(STDIN.read)
-modules = params['modules'].split(',')
+modname = params['modules'].split(',')
 
 unless Puppet[:server] == Puppet[:certname]
   puts 'This task can only be run against the Master (of Masters)'
   exit 1
 end
 
-def uninstall_module(modules)
-    stdout, stderr, status = Open3.capture3('/opt/puppetlabs/bin/puppet', 'module', 'uninstall', modules)
+def uninstall_module(modname)
+    stdout, stderr, status = Open3.capture3('/opt/puppetlabs/bin/puppet', 'module', 'uninstall', modname)
   {
     stdout: stdout.strip,
     stderr: stderr.strip,
@@ -32,7 +32,7 @@ def uninstall_module(modules)
   }
 end
 
-modules.each do |mod|
+modname.each do |mod|
   results[mod] = {}
 
   output=uninstall_module(modname)
