@@ -52,6 +52,7 @@ modname.each do |mod|
       puts 'Either check your spelling and try again or it was not installed on the system.'
       puts outputerr[2..100]
       puts ''
+      puts ''
     when /Other installed modules have dependencies/
       puts ''
       puts "Other installed modules have dependencies on #{mod}"
