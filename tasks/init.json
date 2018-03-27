@@ -1,10 +1,10 @@
 {
   "puppet_task_version": 1,
   "supports_noop": false,
-  "description": "Deploy Puppet modules from the Puppet Forge",
+  "description": "Uninstall Puppet modules from the Puppet Forge",
   "parameters": {
     "modules": {
-      "description": "Specify the Puppet Forge module name and version, if desired e.g. module=version",
+      "description": "Specify the Puppet Forge module name.",
       "type": "String[1]"
     }
   }

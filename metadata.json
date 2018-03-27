@@ -1,10 +1,12 @@
 {
-  "name": "tspy-module_installer",
+  "name": "tspy-module_uninstaller",
   "version": "0.1.0",
   "author": "Tommy S.",
-  "summary": "Taks to install modules from the Puppet Forge",
+  "summary": "Taks to uninstall modules from the Puppet Forge",
   "license": "Apache-2.0",
-  "source": "https://github.com/tspeigner/puppet-module_installer",
+  "source": "https://github.com/tspeigner/puppet-module_uninstaller",
+  "project_page": "https://github.com/tspeigner/puppet-module_uninstaller",
+  "issues_url": "https://github.com/tspeigner/puppet-module_uninstaller/issues",
   "dependencies": [
 
   ],

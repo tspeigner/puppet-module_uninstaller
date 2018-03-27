@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 **Features**
 
-Install a module from the Puppet Forge.
+Uninstall a module from the Puppet Forge.
 
 **Bugfixes**
 

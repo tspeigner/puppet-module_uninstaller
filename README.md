@@ -1,5 +1,5 @@
 
-# module_installer
+# module_uninstaller
 
 #### Table of Contents
 
@@ -11,15 +11,15 @@
 
 ## Description
 
-This module allows you to install Puppet Modules directly from the Puppet Forge.
+This module allows you to uninstall Puppet Modules directly from the Puppet Forge.
 
 ## Usage
 
-Install the Task > Go to Tasks > Select module_installer > Enter <modulename> or <modulename=version>. If you only specify the 'modulename' the task will install the latest version, otherwise you can specify the version with the 'modulename=version' format.
+Uninstall the Task > Go to Tasks > Select module_uninstaller > Enter <modulename> > Select master node > Run Job.
 
 ## Reference
 
-[How to install modules from Puppet Forge](https://puppet.com/docs/puppet/5.3/modules_installing.html#install-modules-from-the-puppet-forge)
+[How to uninstall modules from Puppet Forge](https://puppet.com/docs/puppet/5.3/modules_installing.html#uninstalling-modules)
 
 ## Limitations
 
