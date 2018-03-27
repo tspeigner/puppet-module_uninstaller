@@ -6,7 +6,7 @@
 #
 # Parameters:
 #   * module - The name of the Puppet Forge module to install.
-#   * version - The version of the module to install.
+#   Example usage: modname=version >> tspy-code_deploy=1.0.2
 
 require 'puppet'
 require 'puppetclassify'
@@ -39,32 +39,21 @@ end
 modules.each do |mod|
   results[mod] = {}
   modlist=mod.split('=')
-
-# modlist is the list of modules installed.
-# the split is on the '='
-# version is the second value, version number
-# if there a version is entered then install with that version number
-# otherwise install without a version number, which is latest.
+  modname=modlist[0]
+  output=install_module(modname,version)
 
   if modlist.length > 1
     version=modlist[1]
   else
     version=''
   end
-  
-  modname = modlist[0]
-  vers = modlist[1]
-  output=install_module(modname,version)
+
   if output[:exit_code] == 0
     results[mod][:result] = if output[:stdout].include? 'already installed'
                               puts "The #{modname} module is already installed."
                             else
-                              if vers == ''
-                                puts "The latest version of #{modname} module was installed"
-                              else
-                                puts "The #{modname} v#{vers} module was installed."
-                              end
-                            end 
+                              puts "The #{modname} module was installed."
+                            end
   else
     results[mod][:result] = case output[:stderr]
     when /400 Bad Request/
@@ -92,23 +81,3 @@ modules.each do |mod|
     end
   end
 end
-#def code_manager_installed?
-#  if File.exist?('/etc/puppetlabs/code-staging')
-#    true
-#  else
-#    false
-#  end
-#end
-#
-#unless code_manager_installed?
-#  puts 'It appears that Code Manager is installed look here for more information'
-#  puts 'Managing environment content with a Puppetfile'
-#  puts 'https://puppet.com/docs/pe/2017.3/code_management/puppetfile.html#managing-environment-content-with-puppetfiles'
-#  puts ''
-#  puts '-------------------------------'
-#  puts '-------------------------------'
-#  puts '-------------------------------'
-#  puts ''
-#  puts "Continuing installation of #{modules} "
-#  exit 0
-#end

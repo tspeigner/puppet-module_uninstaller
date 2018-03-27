@@ -2,9 +2,9 @@
   "name": "tspy-module_installer",
   "version": "0.1.0",
   "author": "Tommy S.",
-  "summary": "",
+  "summary": "Taks to install modules from the Puppet Forge",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/tspeigner/puppet-module_installer",
   "dependencies": [
 
   ],
@@ -60,5 +60,12 @@
   ],
   "pdk-version": "1.4.1",
   "template-url": "https://github.com/puppetlabs/pdk-templates",
-  "template-ref": "1.4.1-0-g52adbbb"
+  "template-ref": "1.4.1-0-g52adbbb",
+  "tags": [
+    "forge",
+    "task",
+    "install",
+    "module",
+    "puppet forge"
+  ]
 }
