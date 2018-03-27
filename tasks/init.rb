@@ -39,15 +39,15 @@ modname.each do |mod|
 
   if output[:exit_code] == 0
     results[mod][:result] = if output[:stdout].include? 'Removed'
-                              puts "The #{modname} module has been uninstalled."
+                              puts "The #{mod} module has been uninstalled."
                             end
   else
     results[mod][:result] = case output[:stderr]
     when /is not installed/
-      puts "The #{modname} module(s) is not installed."
+      puts "The #{mod} module(s) is not installed."
       puts 'Either check your spelling and try again or it was not installed on the system.'
     when /Other installed modules have dependencies/
-      puts "Other installed modules have dependencies on #{modname}"
+      puts "Other installed modules have dependencies on #{mod}"
     end
   end
 end
