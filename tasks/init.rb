@@ -35,7 +35,7 @@ end
 modname.each do |mod|
   results[mod] = {}
 
-  output=uninstall_module(modname)
+  output=uninstall_module(mod)
 
   if output[:exit_code] == 0
     results[mod][:result] = if output[:stdout].include? 'Removed'
