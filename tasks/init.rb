@@ -36,6 +36,7 @@ modname.each do |mod|
   results[mod] = {}
 
   output=uninstall_module(mod)
+  outputerr=output[:stderr].split("\n")
 
   if output[:exit_code] == 0
     results[mod][:result] = if output[:stdout].include? 'Removed'
@@ -48,7 +49,9 @@ modname.each do |mod|
       puts 'Either check your spelling and try again or it was not installed on the system.'
       puts ''
       puts ''
-      puts output[:stderr].sub(/(^[\[\]]\d;\d{2}m)|([\[\]]\dm$)/, '')
+      puts outputerr[2..100]
+      puts ''
+      puts ''
     when /Other installed modules have dependencies/
       puts "Other installed modules have dependencies on #{mod}"
     end
