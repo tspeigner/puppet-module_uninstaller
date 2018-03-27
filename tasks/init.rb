@@ -48,7 +48,7 @@ modname.each do |mod|
       puts 'Either check your spelling and try again or it was not installed on the system.'
       puts ''
       puts ''
-      puts "#{output[:stderr]}.sub(/[1;31m[0m/, '**')"
+      puts output[:stderr].sub(/[1;3m0]/, '**')
     when /Other installed modules have dependencies/
       puts "Other installed modules have dependencies on #{mod}"
     end
